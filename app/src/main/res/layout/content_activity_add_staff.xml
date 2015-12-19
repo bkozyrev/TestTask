@@ -133,6 +133,42 @@
                 android:layout_height="45dp"
                 android:src="@drawable/personal_area"
                 android:paddingLeft="20dp"
+                android:id="@+id/img_age"
+                android:layout_centerVertical="true"
+                android:layout_gravity="center"/>
+
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/input_layout_age"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:hintTextAppearance="@android:style/TextAppearance.Large"
+                android:layout_marginLeft="20dp"
+                android:layout_toRightOf="@+id/img_age"
+                android:layout_alignBottom="@+id/img_age"
+                android:layout_gravity="center">
+
+                <EditText
+                    android:id="@+id/input_age"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:singleLine="true"
+                    android:inputType="number"
+                    android:hint="Age" />
+
+            </android.support.design.widget.TextInputLayout>
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="80dp"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="45dp"
+                android:layout_height="45dp"
+                android:src="@drawable/personal_area"
+                android:paddingLeft="20dp"
                 android:id="@+id/img_gender"
                 android:layout_centerVertical="true"
                 android:layout_gravity="center"/>

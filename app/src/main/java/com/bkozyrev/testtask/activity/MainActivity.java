@@ -87,10 +87,8 @@ public class MainActivity extends BaseActivity {
                 fragment = new StaffFragment();
                 break;
             case 1:
-                //fragment = new MyMeetingsFragment();
                 break;
             case 2:
-                //fragment = new CampusesFragment();
                 break;
         }
 
@@ -102,4 +100,6 @@ public class MainActivity extends BaseActivity {
             Log.e(this.getClass().getName(), "Error. Fragment is not created");
         }
     }
+
+
 }

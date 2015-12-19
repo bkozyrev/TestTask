@@ -7,5 +7,6 @@
     <string name="error_invalid_first_name">Invalid first name</string>
     <string name="error_invalid_second_name">Invalid second name</string>
     <string name="error_invalid_last_name">Invalid last name</string>
+    <string name="error_invalid_age">Invalid age</string>
     <string name="error_invalid_gender">Should be M or F</string>
 </resources>
