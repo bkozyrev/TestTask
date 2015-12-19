@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group
+        android:checkableBehavior="single">
+        <item
+            android:checked="true"
+            android:id="@+id/item_header_1"
+            android:icon="@drawable/meetings"
+            android:title="@string/staff" />
+        <item
+            android:id="@+id/item_header_2"
+            android:icon="@drawable/my_meetings"
+            android:title="@string/settings" />
+        <item
+            android:id="@+id/item_header_3"
+            android:icon="@drawable/campus"
+            android:title="@string/exit" />
+    </group>
+
+    <!--item android:title="Subheader">
+        <menu>
+            <item
+                android:id="@+id/item_subheader_1"
+                android:icon="@android:drawable/ic_delete"
+                android:title="SubItem 1" />
+            <item
+                android:id="@+id/item_subheader_2"
+                android:icon="@android:drawable/ic_delete"
+                android:title="SubItem 2" />
+        </menu>
+    </item-->
+
+</menu>
