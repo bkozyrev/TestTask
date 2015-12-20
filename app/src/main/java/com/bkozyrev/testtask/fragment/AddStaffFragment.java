@@ -97,6 +97,10 @@ public class AddStaffFragment extends Fragment {
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
 
+        Log.d("AddStaffFragment", "onActivityResult");
+        Log.d("requestCode", "requestCode = " + requestCode);
+        Log.d("resultCode", "resultCode = " + resultCode);
+
         if (requestCode == RESULT_LOAD_IMAGE && resultCode == Activity.RESULT_OK && data != null) {
 
             mImagePath = data.getData();

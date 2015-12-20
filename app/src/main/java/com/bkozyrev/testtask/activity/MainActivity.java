@@ -106,6 +106,10 @@ public class MainActivity extends BaseActivity {
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
 
+        Log.d("MainActivity", "onActivityResult");
+        Log.d("requestCode", "requestCode = " + requestCode);
+        Log.d("resultCode", "resultCode = " + resultCode);
+
         Fragment fragment = getSupportFragmentManager().findFragmentByTag("AddStaffFragmentTag");
         if(fragment != null) {
             fragment.onActivityResult(requestCode, resultCode, data);
