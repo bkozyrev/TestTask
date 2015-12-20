@@ -1,9 +1,9 @@
 package com.bkozyrev.testtask.fragment;
 
-import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.Loader;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -17,10 +17,9 @@ import android.view.ViewGroup;
 import com.bkozyrev.testtask.R;
 import com.bkozyrev.testtask.SQLite.CustomCursorLoader;
 import com.bkozyrev.testtask.SQLite.DataBase;
-import com.bkozyrev.testtask.activity.AddStaffActivity;
-import com.bkozyrev.testtask.activity.StaffActivity;
-import com.bkozyrev.testtask.adapter.DividerItemDecoration;
 import com.bkozyrev.testtask.adapter.StaffRecyclerAdapter;
+
+import java.util.ArrayList;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -31,12 +30,12 @@ public class StaffFragment extends Fragment implements LoaderManager.LoaderCallb
     public static final String ITEM_ID_TAG = "item_id";
 
     private DataBase mDataBase;
+    private ArrayList<Integer> valuesIds;
 
     @Bind(R.id.staff_list) RecyclerView mStaffList;
 
     @OnClick(R.id.fab) void addStaff() {
-        Intent intent = new Intent(getContext(), AddStaffActivity.class);
-        startActivity(intent);
+        createFragment(new AddStaffFragment(), "AddStaffFragmentTag");
     }
 
     public StaffFragment() {
@@ -54,16 +53,28 @@ public class StaffFragment extends Fragment implements LoaderManager.LoaderCallb
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
 
+        valuesIds = new ArrayList<>();
+
         mStaffList.setHasFixedSize(true);
         mStaffList.setItemAnimator(new DefaultItemAnimator());
         mStaffList.setLayoutManager(new LinearLayoutManager(getContext()));
-        mStaffList.addItemDecoration(new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL_LIST));
     }
 
     @Override
     public void onActivityCreated (Bundle savedInstanceState){
         super.onActivityCreated(savedInstanceState);
 
+        initialiseDB();
+
+        /*getFragmentManager().addOnBackStackChangedListener(
+                new FragmentManager.OnBackStackChangedListener() {
+                    public void onBackStackChanged() {
+                        initialiseDB();
+                    }
+                });*/
+    }
+
+    public void initialiseDB(){
         mDataBase = new DataBase(getActivity());
         mDataBase.open();
 
@@ -80,6 +91,7 @@ public class StaffFragment extends Fragment implements LoaderManager.LoaderCallb
     public void onLoadFinished(Loader<Cursor> loader, Cursor cursor) {
         if(cursor != null) {
             mStaffList.setAdapter(new StaffRecyclerAdapter(getContext(), cursor, this));
+            saveDatabaseValuesIds(cursor);
         }
     }
 
@@ -101,8 +113,28 @@ public class StaffFragment extends Fragment implements LoaderManager.LoaderCallb
 
         int clickedPosition = mStaffList.getChildLayoutPosition(view);
 
-        Intent intent = new Intent(getActivity(), StaffActivity.class);
-        intent.putExtra(ITEM_ID_TAG, clickedPosition + 1);
-        startActivity(intent);
+        Bundle arguments = new Bundle();
+        arguments.putInt(ITEM_ID_TAG, valuesIds.get(clickedPosition));
+
+        InfoStaffFragment fragment = new InfoStaffFragment();
+        fragment.setArguments(arguments);
+
+        createFragment(fragment, "InfoStaffFragmentTag");
+    }
+
+    public void saveDatabaseValuesIds(Cursor cursor){
+        if(cursor != null){
+            while(cursor.moveToNext()){
+                valuesIds.add(cursor.getInt(cursor.getColumnIndex(DataBase.COLUMN_ID)));
+            }
+        }
+    }
+
+    public void createFragment(Fragment fragment, String tag){
+        FragmentTransaction ft = getFragmentManager().beginTransaction();
+        ft.replace(R.id.staff_layout, fragment, tag);
+        ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
+        ft.addToBackStack(null);
+        ft.commit();
     }
 }

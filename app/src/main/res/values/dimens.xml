@@ -4,4 +4,5 @@
     <dimen name="activity_vertical_margin">16dp</dimen>
     <dimen name="fab_margin">16dp</dimen>
     <dimen name="ic_menu_size">36dp</dimen>
+    <dimen name="item_staff_list_height">72dp</dimen>
 </resources>

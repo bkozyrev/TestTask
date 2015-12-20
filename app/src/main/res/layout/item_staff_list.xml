@@ -3,32 +3,31 @@
     xmlns:card_view="http://schemas.android.com/apk/res-auto"
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="@dimen/item_staff_list_height"
     android:id="@+id/card_view"
-    android:layout_margin="10dp"
+    android:layout_margin="5dp"
     android:background="@color/white"
     card_view:cardElevation="4dp"
     card_view:cardUseCompatPadding="true"
     card_view:cardCornerRadius="4dp">
 
     <LinearLayout
-        android:orientation="vertical"
+        android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginTop="10dp">
+        android:layout_height="match_parent">
 
         <ImageView
-            android:layout_width="match_parent"
-            android:layout_height="300dp"
+            android:layout_width="@dimen/item_staff_list_height"
+            android:layout_height="wrap_content"
             android:id="@+id/image_staff"
-            android:scaleType="center"/>
+            android:scaleType="centerCrop"/>
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:gravity="center"
-            android:textSize="18sp"
+            android:textSize="16sp"
             android:id="@+id/name_view"
             android:padding="10dp"
             android:textColor="@color/md_black_1000_50"/>

@@ -1,17 +1,29 @@
 package com.bkozyrev.testtask.model;
 
-public class Staff {
+import android.os.Parcel;
+import android.os.Parcelable;
+
+public class Staff implements Parcelable{
 
     private String mFirstName, mSecondName, mLastName, mGender, mImagePath;
-    private int mAge;
+    private int mAge, mId;
 
-    public Staff(String mFirstName, String mSecondName, String mLastName, int mAge, String mGender, String mImagePath) {
+    public Staff(int mId, String mFirstName, String mSecondName, String mLastName, int mAge, String mGender, String mImagePath) {
+        this.mId = mId;
         this.mFirstName = mFirstName;
         this.mSecondName = mSecondName;
         this.mLastName = mLastName;
         this.mAge = mAge;
         this.mGender = mGender;
         this.mImagePath = mImagePath;
+    }
+
+    public int getId() {
+        return mId;
+    }
+
+    public void setId(int mId) {
+        this.mId = mId;
     }
 
     public String getFirstName() {
@@ -60,5 +72,43 @@ public class Staff {
 
     public void setImagePath(String mImagePath) {
         this.mImagePath = mImagePath;
+    }
+
+    @Override
+    public void writeToParcel(Parcel parcel, int flags) {
+        parcel.writeInt(mId);
+        parcel.writeString(mFirstName);
+        parcel.writeString(mSecondName);
+        parcel.writeString(mLastName);
+        parcel.writeInt(mAge);
+        parcel.writeString(mGender);
+        parcel.writeString(mImagePath);
+    }
+
+    public Staff(Parcel in) {
+        mId = in.readInt();
+        mFirstName = in.readString();
+        mSecondName = in.readString();
+        mLastName = in.readString();
+        mAge = in.readInt();
+        mGender = in.readString();
+        mImagePath = in.readString();
+    }
+
+    public static final Parcelable.Creator CREATOR = new Parcelable.Creator() {
+        @Override
+        public Staff createFromParcel(Parcel in) {
+            return new Staff(in);
+        }
+
+        @Override
+        public Staff[] newArray(int size) {
+            return new Staff[size];
+        }
+    };
+
+    @Override
+    public int describeContents() {
+        return 0;
     }
 }

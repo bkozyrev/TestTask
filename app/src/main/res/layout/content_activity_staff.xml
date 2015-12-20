@@ -46,6 +46,39 @@
             android:layout_marginTop="5dp"
             android:textColor="@color/md_black_1000"/>
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="20sp"
+                android:textColor="@color/colorAccent"
+                android:background="@drawable/btn_add_staff_background"
+                android:padding="5dp"
+                android:layout_margin="5dp"
+                android:layout_gravity="center"
+                android:layout_weight="0.5"
+                android:id="@+id/edit_staff_button"
+                android:text="Edit"/>
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="20sp"
+                android:textColor="@color/colorAccent"
+                android:background="@drawable/btn_add_staff_background"
+                android:padding="5dp"
+                android:layout_gravity="center"
+                android:layout_weight="0.5"
+                android:layout_margin="5dp"
+                android:id="@+id/delete_staff_button"
+                android:text="Delete"/>
+
+        </LinearLayout>
+
     </LinearLayout>
 
 </android.support.v4.widget.NestedScrollView>

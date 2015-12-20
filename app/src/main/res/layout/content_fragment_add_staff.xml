@@ -1,0 +1,203 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android.support.design="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_marginTop="10dp"
+    android:paddingBottom="10dp">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:layout_width="45dp"
+            android:layout_height="45dp"
+            android:src="@drawable/personal_area"
+            android:paddingLeft="20dp"
+            android:layout_centerVertical="true"
+            android:id="@+id/img_first_name"
+            android:layout_gravity="center"/>
+
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/input_layout_first_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            app:hintTextAppearance="@android:style/TextAppearance.Large"
+            android.support.design:counterEnabled="true"
+            android:layout_toRightOf="@+id/img_first_name"
+            android:layout_alignBottom="@+id/img_first_name">
+
+            <EditText
+                android:id="@+id/input_first_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:singleLine="true"
+                android:inputType="textPersonName"
+                android:textColor="@color/md_black_1000_75"
+                android:hint="First name" />
+
+        </android.support.design.widget.TextInputLayout>
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:layout_width="45dp"
+            android:layout_height="45dp"
+            android:src="@drawable/personal_area"
+            android:paddingLeft="20dp"
+            android:id="@+id/img_second_name"
+            android:layout_centerVertical="true"
+            android:layout_gravity="center"/>
+
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/input_layout_second_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:hintTextAppearance="@android:style/TextAppearance.Large"
+            android:layout_marginLeft="20dp"
+            android:layout_toRightOf="@+id/img_second_name"
+            android:layout_alignBottom="@+id/img_second_name"
+            android:layout_gravity="center">
+
+            <EditText
+                android:id="@+id/input_second_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:singleLine="true"
+                android:inputType="textPersonName"
+                android:hint="Second name" />
+
+        </android.support.design.widget.TextInputLayout>
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:layout_width="45dp"
+            android:layout_height="45dp"
+            android:src="@drawable/personal_area"
+            android:paddingLeft="20dp"
+            android:id="@+id/img_last_name"
+            android:layout_centerVertical="true"
+            android:layout_gravity="center"/>
+
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/input_layout_last_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:hintTextAppearance="@android:style/TextAppearance.Large"
+            android:layout_marginLeft="20dp"
+            android:layout_toRightOf="@+id/img_last_name"
+            android:layout_alignBottom="@+id/img_last_name"
+            android:layout_gravity="center">
+
+            <EditText
+                android:id="@+id/input_last_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:singleLine="true"
+                android:inputType="textPersonName"
+                android:hint="Last name" />
+
+        </android.support.design.widget.TextInputLayout>
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:layout_width="45dp"
+            android:layout_height="45dp"
+            android:src="@drawable/personal_area"
+            android:paddingLeft="20dp"
+            android:id="@+id/img_age"
+            android:layout_centerVertical="true"
+            android:layout_gravity="center"/>
+
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/input_layout_age"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:hintTextAppearance="@android:style/TextAppearance.Large"
+            android:layout_marginLeft="20dp"
+            android:layout_toRightOf="@+id/img_age"
+            android:layout_alignBottom="@+id/img_age"
+            android:layout_gravity="center">
+
+            <EditText
+                android:id="@+id/input_age"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:singleLine="true"
+                android:inputType="number"
+                android:hint="Age" />
+
+        </android.support.design.widget.TextInputLayout>
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:layout_width="45dp"
+            android:layout_height="45dp"
+            android:src="@drawable/personal_area"
+            android:paddingLeft="20dp"
+            android:id="@+id/img_gender"
+            android:layout_centerVertical="true"
+            android:layout_gravity="center"/>
+
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/input_layout_gender"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:hintTextAppearance="@android:style/TextAppearance.Large"
+            android:layout_marginLeft="20dp"
+            android:layout_toRightOf="@+id/img_gender"
+            android:layout_alignBottom="@+id/img_gender"
+            android:layout_gravity="center">
+
+            <EditText
+                android:id="@+id/input_gender"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:singleLine="true"
+                android:hint="Gender" />
+
+        </android.support.design.widget.TextInputLayout>
+
+    </RelativeLayout>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="20sp"
+        android:textColor="@color/colorAccent"
+        android:background="@drawable/btn_add_staff_background"
+        android:padding="5dp"
+        android:layout_gravity="center"
+        android:id="@+id/add_staff_button"
+        android:text="Add staff"/>
+
+</LinearLayout>

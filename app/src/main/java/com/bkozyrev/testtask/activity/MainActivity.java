@@ -1,5 +1,6 @@
 package com.bkozyrev.testtask.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
@@ -89,6 +90,7 @@ public class MainActivity extends BaseActivity {
             case 1:
                 break;
             case 2:
+                finish();
                 break;
         }
 
@@ -101,5 +103,23 @@ public class MainActivity extends BaseActivity {
         }
     }
 
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
 
+        Fragment fragment = getSupportFragmentManager().findFragmentByTag("AddStaffFragmentTag");
+        if(fragment != null) {
+            fragment.onActivityResult(requestCode, resultCode, data);
+        }
+        super.onActivityResult(requestCode, resultCode, data);
+    }
+
+    @Override
+    public void onBackPressed() {
+        /*if (getFragmentManager().getBackStackEntryCount() > 0) {
+            getFragmentManager().popBackStack();
+        } else {
+            super.onBackPressed();
+        }*/
+        super.onBackPressed();
+    }
 }

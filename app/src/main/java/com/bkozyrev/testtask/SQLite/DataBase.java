@@ -26,7 +26,7 @@ public class DataBase {
 
     private static final String DB_CREATE =
             "create table if not exists " + DB_TABLE + "(" +
-                    COLUMN_ID + " integer primary key autoincrement, " +
+                    COLUMN_ID + " integer primary key, " + // autoincrement
                     COLUMN_FIRST_NAME + " text not null, " +
                     COLUMN_SECOND_NAME + " text not null, " +
                     COLUMN_LAST_NAME + " text not null, " +
@@ -74,8 +74,19 @@ public class DataBase {
         mDB.insert(DB_TABLE, null, cv);
     }
 
+    public void updateRecord(int id, String firstName, String secondName, String lastName, int age, String gender, String imagePath){
+        ContentValues cv = new ContentValues();
+        cv.put(COLUMN_FIRST_NAME, firstName);
+        cv.put(COLUMN_SECOND_NAME, secondName);
+        cv.put(COLUMN_LAST_NAME, lastName);
+        cv.put(COLUMN_AGE, age);
+        cv.put(COLUMN_GENDER, gender);
+        cv.put(COLUMN_IMAGE_PATH, imagePath);
+        mDB.update(DB_TABLE, cv, COLUMN_ID + " = " + id, null);
+    }
+
     // удалить запись из DB_TABLE
-    public void delRec(int id) {
+    public void delRecord(int id) {
         mDB.delete(DB_TABLE, COLUMN_ID + " = " + id, null);
     }
 
@@ -92,6 +103,8 @@ public class DataBase {
     public Cursor getRecord(int id){
         String selectQuery = "SELECT * FROM " + DB_TABLE + " WHERE " + COLUMN_ID + " = " + id;
         Log.d("query", selectQuery);
+
+        //mDB.query(DB_TABLE, )
 
         return mDB.rawQuery(selectQuery, null);
     }

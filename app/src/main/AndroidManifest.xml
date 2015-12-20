@@ -9,6 +9,7 @@
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"
+        android:noHistory="false"
         android:theme="@style/AppTheme" >
         <activity android:name=".activity.MainActivity"
             android:label="Staff">
@@ -18,12 +19,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
-        <activity android:name=".activity.AddStaffActivity"
-            android:label="Add staff"/>
-
-        <activity android:name=".activity.StaffActivity"
-            android:label="Staff"/>
 
     </application>
 
