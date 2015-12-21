@@ -1,49 +1,70 @@
 package com.bkozyrev.testtask.activity;
 
+import android.app.Activity;
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBar;
+import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
 
 import com.bkozyrev.testtask.R;
+import com.bkozyrev.testtask.fragment.AddStaffFragment;
 import com.bkozyrev.testtask.fragment.StaffFragment;
 
-public class MainActivity extends BaseActivity {
+import butterknife.Bind;
+import butterknife.ButterKnife;
 
-    private DrawerLayout mDrawerLayout;
+public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
-    @Override
-    protected int getLayoutResourceIdentifier() {
-        return R.layout.activity_main;
-    }
+    @Bind(R.id.toolbar)
+    Toolbar mToolbar;
+    @Bind(R.id.drawer_layout)
+    DrawerLayout mDrawerLayout;
+    @Bind(R.id.navigation_view)
+    NavigationView mNavigationView;
 
-    @Override
-    protected boolean getDisplayHomeAsUp() {
-        return true;
-    }
+    private ActionBarDrawerToggle mDrawerToggle;
 
-    @Override
-    protected boolean getHomeButtonEnabled() {
-        return false;
-    }
+
+//    @Override
+//    protected int getLayoutResourceIdentifier() {
+//        return R.layout.activity_main;
+//    }
+//
+//    @Override
+//    protected boolean getDisplayHomeAsUp() {
+//        return true;
+//    }
+//
+//    @Override
+//    protected boolean getHomeButtonEnabled() {
+//        return true;
+//    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+        ButterKnife.bind(this);
 
-        ActionBar actionBar = getSupportActionBar();
-        actionBar.setHomeAsUpIndicator(R.drawable.ic_menu_white_36dp);
+        setSupportActionBar(mToolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setHomeButtonEnabled(true);
 
-        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+        mNavigationView.setNavigationItemSelectedListener(this);
 
-        NavigationView navigationView = (NavigationView) findViewById(R.id.navigation_view);
-        setupNavigationDrawerContent(navigationView);
+        mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout, mToolbar, R.string.drawer_open, R.string.drawer_close);
+        mDrawerLayout.setDrawerListener(mDrawerToggle);
+        mDrawerToggle.syncState();
+
         setSelectedItem(0);
     }
 
@@ -57,33 +78,10 @@ public class MainActivity extends BaseActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    private void setupNavigationDrawerContent(NavigationView navigationView) {
-        navigationView.setNavigationItemSelectedListener(
-                new NavigationView.OnNavigationItemSelectedListener() {
-                    @Override
-                    public boolean onNavigationItemSelected(MenuItem menuItem) {
-                        switch (menuItem.getItemId()) {
-                            case R.id.item_header_1:
-                                setSelectedItem(0);
-                                break;
-                            case R.id.item_header_2:
-                                setSelectedItem(1);
-                                break;
-                            case R.id.item_header_3:
-                                setSelectedItem(2);
-                                break;
-                        }
-                        menuItem.setChecked(true);
-
-                        return true;
-                    }
-                });
-    }
-
-    public void setSelectedItem(int position){
+    public void setSelectedItem(int position) {
         Fragment fragment = null;
 
-        switch (position){
+        switch (position) {
             case 0:
                 fragment = new StaffFragment();
                 break;
@@ -97,7 +95,6 @@ public class MainActivity extends BaseActivity {
         if (fragment != null) {
             FragmentManager fragmentManager = getSupportFragmentManager();
             fragmentManager.beginTransaction().replace(R.id.content_frame, fragment).commit();
-            mDrawerLayout.closeDrawer(GravityCompat.START);
         } else {
             Log.e(this.getClass().getName(), "Error. Fragment is not created");
         }
@@ -105,16 +102,20 @@ public class MainActivity extends BaseActivity {
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-
-        Log.d("MainActivity", "onActivityResult");
-        Log.d("requestCode", "requestCode = " + requestCode);
-        Log.d("resultCode", "resultCode = " + resultCode);
-
-        Fragment fragment = getSupportFragmentManager().findFragmentByTag("AddStaffFragmentTag");
-        if(fragment != null) {
-            fragment.onActivityResult(requestCode, resultCode, data);
-        }
         super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == AddStaffFragment.RESULT_LOAD_IMAGE && resultCode == Activity.RESULT_OK && data != null) {
+
+            Fragment fragment = getSupportFragmentManager().findFragmentByTag(StaffFragment.TAG);
+            if (fragment != null) {
+                ((AddStaffFragment) fragment).updateImage(data.getData());
+            }
+        }
+    }
+
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        mDrawerToggle.onConfigurationChanged(newConfig);
     }
 
     @Override
@@ -124,6 +125,20 @@ public class MainActivity extends BaseActivity {
         } else {
             super.onBackPressed();
         }*/
-        super.onBackPressed();
+        if (mDrawerLayout.isDrawerOpen(GravityCompat.START)) {
+            mDrawerLayout.closeDrawer(GravityCompat.START);
+        } else {
+            super.onBackPressed();
+        }
+    }
+
+    @Override
+    public boolean onNavigationItemSelected(MenuItem item) {
+        setSelectedItem(item.getItemId());
+        item.setChecked(true);
+        if (mDrawerLayout.isDrawerOpen(GravityCompat.START)) {
+            mDrawerLayout.closeDrawer(GravityCompat.START);
+        }
+        return true;
     }
 }

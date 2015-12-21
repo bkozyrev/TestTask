@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -18,7 +19,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 
 import com.bkozyrev.testtask.R;
-import com.bkozyrev.testtask.SQLite.DataBase;
+import com.bkozyrev.testtask.database.DataBase;
 import com.bkozyrev.testtask.activity.MainActivity;
 import com.bkozyrev.testtask.model.Staff;
 import com.bumptech.glide.Glide;
@@ -28,8 +29,9 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 public class AddStaffFragment extends Fragment {
+    public static final String TAG = AddStaffFragment.class.getSimpleName();
 
-    private static final int RESULT_LOAD_IMAGE = 1;
+    public static final int RESULT_LOAD_IMAGE = 1;
     private DataBase mDataBase;
     private Uri mImagePath;
     private Staff mStaff;
@@ -61,7 +63,7 @@ public class AddStaffFragment extends Fragment {
 
         if(arg != null){
             mUpdate = true;
-            mStaff = arg.getParcelable(InfoStaffFragment.STAFF_TAG);
+            mStaff = arg.getParcelable(InfoStaffFragment.TAG);
             mImagePath = Uri.parse(mStaff.getImagePath());
         }
 
@@ -94,22 +96,28 @@ public class AddStaffFragment extends Fragment {
         return super.onOptionsItemSelected(menuItem);
     }*/
 
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+//    @Override
+//    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+//        super.onActivityResult(requestCode, resultCode, data);
+//
+//        Log.d(TAG, "onActivityResult");
+//        Log.d(TAG, "requestCode = " + requestCode);
+//        Log.d(TAG, "resultCode = " + resultCode);
+//
+//        if (requestCode == RESULT_LOAD_IMAGE && resultCode == Activity.RESULT_OK && data != null) {
+//
+//
+//        }
+//    }
 
-        Log.d("AddStaffFragment", "onActivityResult");
-        Log.d("requestCode", "requestCode = " + requestCode);
-        Log.d("resultCode", "resultCode = " + resultCode);
+    @Nullable
+    public void updateImage(Uri imagePath) {
+        mImagePath = imagePath;
 
-        if (requestCode == RESULT_LOAD_IMAGE && resultCode == Activity.RESULT_OK && data != null) {
-
-            mImagePath = data.getData();
-
-            try {
-                Glide.with(mContext).load(mImagePath).into(mImageStaffView);
-            } catch (Exception exception) {
-                exception.printStackTrace();
-            }
+        try {
+            Glide.with(mContext).load(mImagePath).into(mImageStaffView);
+        } catch (Exception exception) {
+            exception.printStackTrace();
         }
     }
 
@@ -173,7 +181,7 @@ public class AddStaffFragment extends Fragment {
         else{
             mDataBase = new DataBase(mContext);
             mDataBase.open();
-            Log.d("database", "open");
+            Log.d(TAG, "database open");
             if(mUpdate) {
                 mDataBase.updateRecord(mStaff.getId(), firstName, secondName, lastName, Integer.parseInt(age), gender, mImagePath.toString());
             }
@@ -218,7 +226,7 @@ public class AddStaffFragment extends Fragment {
         super.onDestroy();
         if(mDataBase != null) {
             mDataBase.close();
-            Log.d("database", "close");
+            Log.d(TAG, "database close");
         }
     }
 }

@@ -15,8 +15,8 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.bkozyrev.testtask.R;
-import com.bkozyrev.testtask.SQLite.CustomCursorLoader;
-import com.bkozyrev.testtask.SQLite.DataBase;
+import com.bkozyrev.testtask.database.CustomCursorLoader;
+import com.bkozyrev.testtask.database.DataBase;
 import com.bkozyrev.testtask.adapter.StaffRecyclerAdapter;
 
 import java.util.ArrayList;
@@ -26,7 +26,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 public class StaffFragment extends Fragment implements LoaderManager.LoaderCallbacks<Cursor>, View.OnClickListener{
-
+    public static final String TAG = StaffFragment.class.getSimpleName();
     public static final String ITEM_ID_TAG = "item_id";
 
     private DataBase mDataBase;
@@ -35,15 +35,14 @@ public class StaffFragment extends Fragment implements LoaderManager.LoaderCallb
     @Bind(R.id.staff_list) RecyclerView mStaffList;
 
     @OnClick(R.id.fab) void addStaff() {
-        createFragment(new AddStaffFragment(), "AddStaffFragmentTag");
+        createFragment(new AddStaffFragment(), TAG);
     }
 
     public StaffFragment() {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_staff, container, false);
         ButterKnife.bind(this, view);
 

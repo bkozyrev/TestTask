@@ -18,8 +18,8 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.bkozyrev.testtask.R;
-import com.bkozyrev.testtask.SQLite.CustomCursorLoader;
-import com.bkozyrev.testtask.SQLite.DataBase;
+import com.bkozyrev.testtask.database.CustomCursorLoader;
+import com.bkozyrev.testtask.database.DataBase;
 import com.bkozyrev.testtask.model.Staff;
 import com.bumptech.glide.Glide;
 
@@ -28,8 +28,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 public class InfoStaffFragment extends Fragment implements LoaderManager.LoaderCallbacks<Cursor>{
-
-    public static final String STAFF_TAG = "staff";
+    public static final String TAG = InfoStaffFragment.class.getSimpleName();
 
     private DataBase mDataBase;
     private int mId;
@@ -70,7 +69,7 @@ public class InfoStaffFragment extends Fragment implements LoaderManager.LoaderC
 
         mDataBase = new DataBase(getContext());
         mDataBase.open();
-        Log.d("database", "open");
+        Log.d(TAG, "database open");
 
         getLoaderManager().initLoader(0, null, this);
     }
@@ -122,12 +121,12 @@ public class InfoStaffFragment extends Fragment implements LoaderManager.LoaderC
             cursor.moveToFirst();
 
             try {
-                mFirstName = cursor.getString(cursor.getColumnIndex("firstName"));
-                mSecondName = cursor.getString(cursor.getColumnIndex("secondName"));
-                mLastName = cursor.getString(cursor.getColumnIndex("lastName"));
-                mGender = cursor.getString(cursor.getColumnIndex("gender"));
-                mImagePath = cursor.getString(cursor.getColumnIndex("imagePath"));
-                mAge = cursor.getInt(cursor.getColumnIndex("age"));
+                mFirstName = cursor.getString(cursor.getColumnIndex(DataBase.COLUMN_FIRST_NAME));
+                mSecondName = cursor.getString(cursor.getColumnIndex(DataBase.COLUMN_SECOND_NAME));
+                mLastName = cursor.getString(cursor.getColumnIndex(DataBase.COLUMN_LAST_NAME));
+                mGender = cursor.getString(cursor.getColumnIndex(DataBase.COLUMN_GENDER));
+                mImagePath = cursor.getString(cursor.getColumnIndex(DataBase.COLUMN_IMAGE_PATH));
+                mAge = cursor.getInt(cursor.getColumnIndex(DataBase.COLUMN_AGE));
             }catch (NullPointerException exception){
                 exception.printStackTrace();
             }
@@ -161,7 +160,7 @@ public class InfoStaffFragment extends Fragment implements LoaderManager.LoaderC
 
         AddStaffFragment fragment = new AddStaffFragment();
         Bundle arguments = new Bundle();
-        arguments.putParcelable(STAFF_TAG, new Staff(mId, mFirstName, mSecondName, mLastName, mAge, mGender, mImagePath));
+        arguments.putParcelable(TAG, new Staff(mId, mFirstName, mSecondName, mLastName, mAge, mGender, mImagePath));
         fragment.setArguments(arguments);
 
         FragmentTransaction ft = getFragmentManager().beginTransaction();
@@ -177,7 +176,7 @@ public class InfoStaffFragment extends Fragment implements LoaderManager.LoaderC
 
         if (mDataBase != null) {
             mDataBase.close();
-            Log.d("database", "close");
+            Log.d(TAG, "close");
         }
     }
 }

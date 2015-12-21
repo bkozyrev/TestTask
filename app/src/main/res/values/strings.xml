@@ -9,4 +9,7 @@
     <string name="error_invalid_last_name">Invalid last name</string>
     <string name="error_invalid_age">Invalid age</string>
     <string name="error_invalid_gender">Should be M or F</string>
+
+    <string name="drawer_open">Open navigation drawer</string>
+    <string name="drawer_close">Close navigation drawer</string>
 </resources>

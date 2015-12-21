@@ -1,4 +1,4 @@
-package com.bkozyrev.testtask.SQLite;
+package com.bkozyrev.testtask.database;
 
 import android.content.Context;
 import android.database.Cursor;
