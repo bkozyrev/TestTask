@@ -1,5 +1,7 @@
 package com.bkozyrev.testtask.fragment;
 
+import android.content.ContentUris;
+import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.net.Uri;
@@ -67,9 +69,9 @@ public class InfoStaffFragment extends Fragment implements LoaderManager.LoaderC
 
         //getActivity().getActionBar().setDisplayShowTitleEnabled(false);
 
-        mDataBase = new DataBase(getContext());
+        /*mDataBase = new DataBase();
         mDataBase.open();
-        Log.d(TAG, "database open");
+        Log.d(TAG, "database open");*/
 
         getLoaderManager().initLoader(0, null, this);
     }
@@ -131,7 +133,7 @@ public class InfoStaffFragment extends Fragment implements LoaderManager.LoaderC
                 exception.printStackTrace();
             }
 
-            cursor.close();
+            //cursor.close();
 
             //displayInfoFromDB(new Staff(firstName, secondName, lastName, age, gender, imagePath));
             displayInfoFromDB(mFirstName, mSecondName, mLastName, mAge, mGender, mImagePath);
@@ -143,14 +145,25 @@ public class InfoStaffFragment extends Fragment implements LoaderManager.LoaderC
     }
 
     public void deleteStaff(){
-        mDataBase.open();
-        mDataBase.delRecord(mId);
+        /*mDataBase.open();
+        mDataBase.delRecord(mId);*/
+
+        Uri uri = ContentUris.withAppendedId(CustomCursorLoader.STAFF_URI, mId);
+        getContext().getContentResolver().delete(uri, null, null);
 
         Snackbar.make(mLayout, "Deleted successfully", Snackbar.LENGTH_LONG)
                 .setAction("UNDO", new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        mDataBase.addRecord(mFirstName, mSecondName, mLastName, mAge, mGender, mImagePath);
+                        ContentValues cv = new ContentValues();
+                        cv.put(DataBase.COLUMN_FIRST_NAME, mFirstName);
+                        cv.put(DataBase.COLUMN_SECOND_NAME, mSecondName);
+                        cv.put(DataBase.COLUMN_LAST_NAME, mLastName);
+                        cv.put(DataBase.COLUMN_AGE, mAge);
+                        cv.put(DataBase.COLUMN_GENDER, mGender);
+                        cv.put(DataBase.COLUMN_IMAGE_PATH, mImagePath);
+                        getContext().getContentResolver().insert(CustomCursorLoader.STAFF_URI, cv);
+                        //mDataBase.addRecord(mFirstName, mSecondName, mLastName, mAge, mGender, mImagePath);
                     }
                 })
                 .show();

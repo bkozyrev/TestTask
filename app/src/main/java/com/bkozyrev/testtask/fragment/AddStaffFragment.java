@@ -1,6 +1,8 @@
 package com.bkozyrev.testtask.fragment;
 
 import android.app.Activity;
+import android.content.ContentUris;
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
@@ -19,6 +21,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 
 import com.bkozyrev.testtask.R;
+import com.bkozyrev.testtask.database.CustomCursorLoader;
 import com.bkozyrev.testtask.database.DataBase;
 import com.bkozyrev.testtask.activity.MainActivity;
 import com.bkozyrev.testtask.model.Staff;
@@ -179,14 +182,26 @@ public class AddStaffFragment extends Fragment {
             }
         }
         else{
-            mDataBase = new DataBase(mContext);
+            /*mDataBase = new DataBase();
             mDataBase.open();
-            Log.d(TAG, "database open");
+            Log.d(TAG, "database open");*/
+
+            ContentValues cv = new ContentValues();
+            cv.put(DataBase.COLUMN_FIRST_NAME, firstName);
+            cv.put(DataBase.COLUMN_SECOND_NAME, secondName);
+            cv.put(DataBase.COLUMN_LAST_NAME, lastName);
+            cv.put(DataBase.COLUMN_AGE, age);
+            cv.put(DataBase.COLUMN_GENDER, gender);
+            cv.put(DataBase.COLUMN_IMAGE_PATH, mImagePath.toString());
+
             if(mUpdate) {
-                mDataBase.updateRecord(mStaff.getId(), firstName, secondName, lastName, Integer.parseInt(age), gender, mImagePath.toString());
+                Uri uri = ContentUris.withAppendedId(CustomCursorLoader.STAFF_URI, mStaff.getId());
+                getContext().getContentResolver().update(uri, cv, null, null);
+                //mDataBase.updateRecord(mStaff.getId(), firstName, secondName, lastName, Integer.parseInt(age), gender, mImagePath.toString());
             }
             else{
-                mDataBase.addRecord(firstName, secondName, lastName, Integer.parseInt(age), gender, mImagePath.toString());
+                getContext().getContentResolver().insert(CustomCursorLoader.STAFF_URI, cv);
+                //mDataBase.addRecord(firstName, secondName, lastName, Integer.parseInt(age), gender, mImagePath.toString());
             }
 
             Intent intent = new Intent(mContext, MainActivity.class);
@@ -224,9 +239,9 @@ public class AddStaffFragment extends Fragment {
 
     public void onDestroy() {
         super.onDestroy();
-        if(mDataBase != null) {
+        /*if(mDataBase != null) {
             mDataBase.close();
             Log.d(TAG, "database close");
-        }
+        }*/
     }
 }

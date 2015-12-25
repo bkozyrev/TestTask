@@ -1,6 +1,7 @@
 package com.bkozyrev.testtask.fragment;
 
 import android.database.Cursor;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
@@ -74,10 +75,10 @@ public class StaffFragment extends Fragment implements LoaderManager.LoaderCallb
     }
 
     public void initialiseDB(){
-        mDataBase = new DataBase(getActivity());
+        /*mDataBase = new DataBase();
         mDataBase.open();
 
-        Log.d("database", "open");
+        Log.d("database", "open");*/
         getLoaderManager().initLoader(0, null, this);
     }
 

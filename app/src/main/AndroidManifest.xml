@@ -3,6 +3,7 @@
     package="com.bkozyrev.testtask" >
 
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.READ_USER_DICTIONARY"/>
 
     <application
         android:allowBackup="true"
@@ -19,6 +20,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <provider android:name="com.bkozyrev.testtask.database.DataBase"
+            android:authorities="com.bkozyrev.testtask.provider">
+        </provider>
 
     </application>
 

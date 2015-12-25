@@ -2,11 +2,15 @@ package com.bkozyrev.testtask.database;
 
 import android.content.Context;
 import android.database.Cursor;
+import android.net.Uri;
 import android.support.v4.content.CursorLoader;
 
 import java.util.concurrent.TimeUnit;
 
 public class CustomCursorLoader extends CursorLoader {
+
+    public static final Uri STAFF_URI = Uri.parse("content://com.bkozyrev.testtask.provider/staff");
+    final Uri STAFF_URI_ID = Uri.parse("content://com.bkozyrev.testtask.provider/staff/#");
 
     private DataBase mDataBase;
     private int mSearchType, mSearchId;
@@ -32,7 +36,7 @@ public class CustomCursorLoader extends CursorLoader {
 
             case DataBase.SEARCH_ALL:
                 try {
-                    cursor = mDataBase.getAllData();
+                    cursor = getContext().getContentResolver().query(STAFF_URI, null, null, null, null);
                 } catch (Exception exception) {
                     exception.printStackTrace();
                 }
@@ -40,7 +44,7 @@ public class CustomCursorLoader extends CursorLoader {
 
             case DataBase.SEARCH_BY_ID:
                 try {
-                    cursor = mDataBase.getRecord(mSearchId);
+                    cursor = getContext().getContentResolver().query(Uri.withAppendedPath(STAFF_URI, "" + mSearchId), null, null, null, null);
                 } catch (Exception exception) {
                     exception.printStackTrace();
                 }
